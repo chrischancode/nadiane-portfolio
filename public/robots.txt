@@ -1,0 +1,38 @@
+# Standard Web Crawlers
+User-agent: *
+Allow: /
+
+# Generative AI & LLM Retrieval Agents
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Applebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: Omgilibot
+Allow: /
+
+# Sitemaps and AI Context
+Sitemap: https://nadianebandola.site/sitemap.xml
+# LLM Context: https://nadianebandola.site/llms.txt
