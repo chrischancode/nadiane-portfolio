@@ -1,0 +1,117 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-outfit: 'Outfit', system-ui, -apple-system, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: #EDE8E1;
+    color: #22201D;
+    font-family: var(--font-inter);
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+  }
+}
+
+/* Rhode inspired muted scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #EDE8E1;
+}
+::-webkit-scrollbar-thumb {
+  background: #C8C1B5;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #22201D;
+}
+
+/* Realistic Matte Graphite Phone Mockup */
+.phone-frame {
+  position: relative;
+  border-radius: 40px;
+  box-shadow: 
+    0 0 0 1px rgba(34, 32, 29, 0.1),
+    0 20px 40px -15px rgba(34, 32, 29, 0.35);
+  background: #121110;
+  border: 9px solid #1E1D1A;
+  overflow: hidden;
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s ease;
+}
+
+.phone-frame:hover {
+  box-shadow: 
+    0 0 0 1px rgba(34, 32, 29, 0.2),
+    0 25px 50px -12px rgba(34, 32, 29, 0.45);
+}
+
+.dynamic-island {
+  position: absolute;
+  top: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 80px;
+  height: 20px;
+  background: #000000;
+  border-radius: 20px;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 9px;
+}
+
+.camera-lens {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #141724;
+  border: 1px solid #27272A;
+}
+
+.sensor-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+  background: #1A1A1C;
+}
+
+.home-indicator {
+  position: absolute;
+  bottom: 8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 90px;
+  height: 4px;
+  background: rgba(255, 255, 255, 0.7);
+  border-radius: 9999px;
+  z-index: 30;
+}
+
+@keyframes spin-disc {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.animate-vinyl {
+  animation: spin-disc 6s linear infinite;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
