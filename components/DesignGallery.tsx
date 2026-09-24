@@ -1,12 +1,33 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import { FolderDown, ZoomIn, X, ArrowUpRight } from "lucide-react";
 import { GRAPHICS_DATA, GraphicItem, CREATOR_PROFILE } from "@/data/portfolioData";
 
 export default function DesignGallery() {
   const [lightboxItem, setLightboxItem] = useState<GraphicItem | null>(null);
+
+  // Close lightbox on Escape key and lock body scroll
+  useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        setLightboxItem(null);
+      }
+    };
+
+    if (lightboxItem) {
+      document.body.style.overflow = "hidden";
+      window.addEventListener("keydown", handleKeyDown);
+    } else {
+      document.body.style.overflow = "unset";
+    }
+
+    return () => {
+      document.body.style.overflow = "unset";
+      window.removeEventListener("keydown", handleKeyDown);
+    };
+  }, [lightboxItem]);
 
   return (
     <section id="designs" className="py-24 sm:py-32 bg-rhode-bg border-b border-rhode-border">
@@ -16,13 +37,13 @@ export default function DesignGallery() {
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
           <div className="max-w-2xl">
             <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-rhode-muted block mb-2">
-              Visual Design &bull; Storefronts &bull; Campaigns
+              Visual Design &bull; Amazon EBC &bull; Social Branding
             </span>
             <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-rhode-dark tracking-tight">
               Design Gallery.
             </h2>
             <p className="mt-2.5 text-sm sm:text-base text-rhode-muted font-normal leading-relaxed">
-              Conversion-focused Amazon listing infographics, foundation awareness visuals, and brand campaign collateral designed for visual distinction.
+              Conversion-focused Amazon listing infographics, community brand campaigns, and promotional digital assets.
             </p>
           </div>
 
@@ -30,66 +51,45 @@ export default function DesignGallery() {
             href={CREATOR_PROFILE.portfolioDriveGraphics}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-rhode-card hover:bg-rhode-dark hover:text-white border border-rhode-border text-xs font-bold uppercase tracking-wider text-rhode-dark transition-all self-start md:self-auto shadow-sm"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white hover:bg-rhode-dark hover:text-white border border-rhode-border text-xs font-bold uppercase tracking-wider text-rhode-dark transition-all self-start md:self-auto shadow-sm"
           >
             <FolderDown className="w-3.5 h-3.5" />
             <span>Google Drive Graphics</span>
           </a>
         </div>
 
-        {/* Rich Editorial Cards Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        {/* Minimalist Editorial Grid: No images visible until clicked */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-x-8 gap-y-10">
           {GRAPHICS_DATA.map((item) => (
             <div
               key={item.id}
               onClick={() => setLightboxItem(item)}
-              className="group cursor-pointer bg-rhode-card rounded-3xl p-3 border border-rhode-border hover:border-rhode-dark/40 hover:shadow-luxe transition-all duration-300 flex flex-col justify-between"
+              className="group cursor-pointer border-t border-rhode-border hover:border-rhode-dark pt-5 transition-all duration-300 flex flex-col justify-between"
             >
-              {/* Image Container with static explicit height and aspect ratio */}
-              <div className="relative w-full h-80 sm:h-72 rounded-2xl overflow-hidden bg-rhode-surface border border-rhode-border/60">
-                <Image
-                  src={item.imageSrc}
-                  alt={item.title}
-                  fill
-                  sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
-                  className="object-cover object-center transition-transform duration-500 group-hover:scale-103"
-                  unoptimized
-                />
-
-                {/* Top Category Badge */}
-                <div className="absolute top-3 left-3 z-10">
-                  <span className="px-3 py-1 rounded-full bg-white/90 backdrop-blur-md text-[10px] font-mono uppercase font-bold tracking-wider text-rhode-dark shadow-sm">
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <span className="text-[10px] font-mono uppercase font-bold text-rhode-muted tracking-wider block">
                     {item.category}
                   </span>
-                </div>
-
-                {/* Subtle Hover Action Overlay */}
-                <div className="absolute inset-0 bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center p-3">
-                  <span className="px-4 py-2 rounded-full bg-white text-rhode-dark text-xs font-display font-bold flex items-center gap-1.5 shadow-md">
+                  <span className="p-1.5 rounded-full bg-rhode-card group-hover:bg-rhode-dark group-hover:text-white text-rhode-muted transition-colors">
                     <ZoomIn className="w-3.5 h-3.5" />
-                    <span>View High Resolution</span>
                   </span>
                 </div>
+
+                <h3 className="font-display font-bold text-base sm:text-lg text-rhode-dark group-hover:text-black transition-colors leading-snug">
+                  {item.title}
+                </h3>
+
+                <p className="text-xs text-rhode-muted font-normal mt-2 leading-relaxed line-clamp-2">
+                  {item.client} &bull; {item.description}
+                </p>
               </div>
 
-              {/* Card Meta Content */}
-              <div className="p-3 pt-4 flex flex-col justify-between flex-1">
-                <div>
-                  <span className="text-[10px] font-mono uppercase font-bold text-rhode-muted block mb-1">
-                    {item.client}
-                  </span>
-                  <h3 className="font-display font-bold text-base text-rhode-dark line-clamp-1 group-hover:text-black transition-colors">
-                    {item.title}
-                  </h3>
-                  <p className="text-xs text-rhode-muted font-normal mt-1.5 line-clamp-2 leading-relaxed">
-                    {item.description}
-                  </p>
-                </div>
-
-                <div className="pt-3 mt-3 border-t border-rhode-border/60 flex items-center justify-between text-xs font-mono text-rhode-dark">
-                  <span className="text-[11px] text-rhode-muted">Inspect Asset</span>
-                  <ArrowUpRight className="w-3.5 h-3.5 text-rhode-muted group-hover:text-rhode-dark group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
-                </div>
+              <div className="pt-4 mt-4 border-t border-rhode-border/50 flex items-center justify-between text-xs font-mono text-rhode-dark">
+                <span className="text-[11px] text-rhode-muted group-hover:text-rhode-dark transition-colors">
+                  Click to inspect asset
+                </span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-rhode-muted group-hover:text-rhode-dark group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-all" />
               </div>
             </div>
           ))}
@@ -97,10 +97,10 @@ export default function DesignGallery() {
 
       </div>
 
-      {/* Lightbox Modal */}
+      {/* Lightbox Modal: Shows the full graphic when an item is clicked */}
       {lightboxItem && (
         <div
-          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 bg-black/85 backdrop-blur-sm animate-in fade-in"
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-8 bg-black/90 backdrop-blur-md animate-in fade-in"
           onClick={() => setLightboxItem(null)}
         >
           <div
@@ -115,6 +115,7 @@ export default function DesignGallery() {
               <X className="w-5 h-5" />
             </button>
 
+            {/* High-Resolution Graphic Display */}
             <div className="relative w-full h-[65vh] bg-[#171614] flex items-center justify-center p-4">
               <Image
                 src={lightboxItem.imageSrc}
@@ -125,6 +126,7 @@ export default function DesignGallery() {
               />
             </div>
 
+            {/* Modal Footer Info */}
             <div className="p-6 bg-rhode-card border-t border-rhode-border flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
               <div>
                 <span className="text-[10px] font-mono uppercase font-bold text-rhode-muted block">
