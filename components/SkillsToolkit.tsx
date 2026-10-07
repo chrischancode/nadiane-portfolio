@@ -1,91 +1,79 @@
-"use client";
-
-import React, { useState } from "react";
-import { Check, Video, TrendingUp, Sparkles, Layers } from "lucide-react";
-import { SKILL_PILLARS } from "@/data/portfolioData";
+import React from "react";
+import { SKILL_PILLARS, TOOLKIT } from "@/data/portfolioData";
+import Reveal from "./Reveal";
 
 export default function SkillsToolkit() {
-  const [activeTab, setActiveTab] = useState(0);
+  const [lead, ...rest] = SKILL_PILLARS;
 
   return (
-    <section id="expertise" className="py-24 sm:py-32 bg-rhode-bg border-b border-rhode-border">
-      <div className="max-w-6xl mx-auto px-4 sm:px-8">
-        
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-16 gap-6">
-          <div className="max-w-2xl">
-            <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-rhode-muted block mb-2">
-              Capabilities &amp; Creative Methodology
-            </span>
-            <h2 className="font-display font-black text-3xl sm:text-4xl lg:text-5xl text-rhode-dark tracking-tight">
-              Skills &amp; Capabilities.
-            </h2>
-            <p className="mt-2.5 text-sm sm:text-base text-rhode-muted font-normal leading-relaxed">
-              Three core pillars engineered to turn fast-scrolling attention into sustained engagement and measurable performance.
-            </p>
-          </div>
+    <section id="expertise" aria-labelledby="expertise-heading" className="py-14 sm:py-20 lg:py-24">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <Reveal className="mb-8 max-w-xl sm:mb-10">
+          <h2 id="expertise-heading" className="font-display text-[2.5rem] font-semibold leading-[1] tracking-display text-rhode-dark sm:text-6xl">
+            What I do
+          </h2>
+          <p className="mt-4 text-base leading-relaxed text-rhode-muted sm:text-lg">
+            Three disciplines that turn a fast scroll into watch time, clicks and sales.
+          </p>
+        </Reveal>
 
-          <div className="hidden sm:flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-rhode-dark animate-pulse" />
-            <span className="text-xs font-mono uppercase font-bold text-rhode-muted">
-              End-to-End Creative Stack
-            </span>
-          </div>
-        </div>
-
-        {/* 3 Luxury Editorial Pillars */}
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
-          {SKILL_PILLARS.map((pillar, idx) => (
+        <div className="grid grid-cols-1 gap-3 sm:gap-4 lg:grid-cols-5 lg:grid-rows-[auto_auto_auto]">
+          {/* Lead pillar: the core craft, given the most room */}
+          <Reveal className="on-dark relative flex flex-col overflow-hidden rounded-[1.75rem] bg-ink-900 p-6 text-ink-100 sm:p-10 lg:col-span-3 lg:row-span-2">
             <div
+              aria-hidden="true"
+              className="pointer-events-none absolute -right-24 -top-24 h-72 w-72 rounded-full bg-[radial-gradient(closest-side,rgba(241,237,230,0.12),transparent)]"
+            />
+            <p className="font-mono text-xs text-ink-500">{lead.number}</p>
+            <h3 className="mt-6 max-w-md font-display text-[1.75rem] font-semibold leading-[1.05] tracking-tight sm:mt-10 sm:text-[2.5rem] lg:text-5xl">
+              {lead.title}
+            </h3>
+            <p className="mt-2 text-sm text-ink-300">{lead.tagline}</p>
+            <p className="mt-6 max-w-[52ch] text-[15px] leading-relaxed text-ink-300">{lead.description}</p>
+            <ul className="mt-7 flex flex-wrap gap-2 lg:mt-auto lg:pt-8" aria-label={`${lead.title} capabilities`}>
+              {lead.capabilities.map((cap) => (
+                <li key={cap} className="rounded-full border border-ink-700 px-3.5 py-1.5 text-[13px] text-ink-100">
+                  {cap}
+                </li>
+              ))}
+            </ul>
+          </Reveal>
+
+          {rest.map((pillar, i) => (
+            <Reveal
               key={pillar.number}
-              className="bg-rhode-card rounded-3xl p-7 sm:p-8 border border-rhode-border hover:border-rhode-dark/40 hover:shadow-luxe transition-all duration-300 flex flex-col justify-between"
+              delay={(i + 1) * 80}
+              className="rounded-[1.75rem] border border-rhode-border bg-rhode-card p-6 sm:p-8 lg:col-span-2"
             >
-              <div>
-                {/* Pillar Number & Tagline */}
-                <div className="flex items-center justify-between pb-4 mb-5 border-b border-rhode-border/60">
-                  <span className="font-mono text-sm font-bold text-rhode-muted">
-                    {pillar.number}
-                  </span>
-                  <span className="text-[10px] font-mono uppercase tracking-wider text-rhode-muted bg-rhode-surface px-2.5 py-1 rounded-full">
-                    {pillar.tagline}
-                  </span>
-                </div>
-
-                {/* Title */}
-                <h3 className="font-display font-bold text-xl sm:text-2xl text-rhode-dark tracking-tight mb-3">
-                  {pillar.title}
-                </h3>
-
-                {/* Description */}
-                <p className="text-xs sm:text-sm text-rhode-muted leading-relaxed mb-6 font-normal">
-                  {pillar.description}
-                </p>
-
-                {/* Bullet points */}
-                <div className="space-y-2.5 pt-2">
-                  {pillar.capabilities.map((cap) => (
-                    <div
-                      key={cap}
-                      className="flex items-center gap-2.5 text-xs font-medium text-rhode-charcoal"
-                    >
-                      <div className="w-4 h-4 rounded-full bg-rhode-surface text-rhode-dark flex items-center justify-center shrink-0">
-                        <Check className="w-2.5 h-2.5 stroke-[3]" />
-                      </div>
-                      <span>{cap}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-
-              {/* Bottom Assurance */}
-              <div className="mt-8 pt-4 border-t border-rhode-border/60 flex items-center justify-between text-[11px] font-mono text-rhode-muted">
-                <span>Verified in Client Ad Accounts</span>
-                <span className="text-rhode-dark font-bold">&bull; Active</span>
-              </div>
-            </div>
+              <p className="font-mono text-xs text-rhode-muted">{pillar.number}</p>
+              <h3 className="mt-4 font-display text-[1.375rem] font-semibold leading-tight tracking-tight text-rhode-dark sm:text-2xl">
+                {pillar.title}
+              </h3>
+              <p className="mt-1.5 text-sm text-rhode-muted">{pillar.tagline}</p>
+              <p className="mt-4 text-sm leading-relaxed text-rhode-charcoal/80">{pillar.description}</p>
+              <ul className="mt-6 flex flex-wrap gap-1.5" aria-label={`${pillar.title} capabilities`}>
+                {pillar.capabilities.map((cap) => (
+                  <li key={cap} className="rounded-full bg-rhode-surface px-3 py-1 text-xs text-rhode-charcoal">
+                    {cap}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
           ))}
-        </div>
 
+          {/* Toolkit strip */}
+          <Reveal
+            delay={240}
+            className="flex flex-col gap-4 rounded-[1.75rem] border border-dashed border-rhode-sand p-6 sm:flex-row sm:items-center sm:justify-between sm:p-8 lg:col-span-5"
+          >
+            <h3 className="shrink-0 font-display text-lg font-semibold tracking-tight text-rhode-dark">Daily toolkit</h3>
+            <ul className="flex flex-wrap gap-x-6 gap-y-2 text-[15px] text-rhode-charcoal sm:justify-end" aria-label="Software">
+              {TOOLKIT.map((tool) => (
+                <li key={tool}>{tool}</li>
+              ))}
+            </ul>
+          </Reveal>
+        </div>
       </div>
     </section>
   );

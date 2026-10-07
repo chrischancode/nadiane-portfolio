@@ -9,17 +9,19 @@ Designed with an editorial, quiet-luxury aesthetic inspired by Rhode Skin and Is
 - **Custom Domain:** [https://nadianebandola.site](https://nadianebandola.site)
 
 ## Features
-- **Phone Mockup Video Showcase:** Realistic 9:16 vertical smartphone containers simulating native TikTok, Reels, and YouTube Shorts playback.
-- **Minimalist Design Gallery:** Quiet luxury editorial layout where graphic assets are displayed via high-resolution interactive lightboxes.
-- **Brand Partners & Collaborations:** Authentically styled partner cards for international brands and creator studios (Brooke Lewis, Scooch, Legends in Seconds, The Birdie Agency, Nifora, and more).
-- **Core Capability Pillars:** Editorial capability cards detailing Short-Form Video Architecture, Performance Ad Strategy, and Visual Brand Storefronts.
+- **Phone Mockup Video Showcase:** Realistic 9:16 device frames showing each edit's real first frame, swipeable on phones and tablets, three-up on desktop, with an in-page Drive player.
+- **Click-to-View Design Gallery:** No images load until a visitor opens the gallery; then every graphic appears in a filterable grid with a full-size lightbox (arrow keys and next/previous buttons).
+- **Brand Partners:** Compact grid of the brands, creators and agencies Nadiane has worked with.
+- **Expertise Bento:** The three core disciplines plus the daily software toolkit.
+- **Experience Timeline:** Filterable, animated accordion with a "show more" for the full role history.
+- **Mobile-First Details:** Safe-area aware layout, 16px inputs (no iOS zoom), hover effects gated to mouse devices, press feedback on touch, scroll-locked overlays with Escape and focus handling, and reduced-motion support.
 - **SEO & AI Visibility (GEO):** Optimized metadata, Schema.org JSON-LD structured graph, `llms.txt` specification, search-engine and AI bot crawling permissions (`robots.txt`), and dynamic `sitemap.xml`.
-- **Fast & Responsive:** Mobile-first architecture built with Next.js 14 and Tailwind CSS.
 
 ## Tech Stack
 - **Framework:** Next.js 14 (App Router)
 - **Language:** TypeScript
 - **Styling:** Tailwind CSS
+- **Fonts:** Geist Sans & Geist Mono
 - **Icons:** Lucide React
 - **Hosting & CI/CD:** Vercel
 

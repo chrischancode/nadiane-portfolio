@@ -10,16 +10,18 @@ import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
-    <main className="min-h-screen flex flex-col bg-rhode-bg text-rhode-dark selection:bg-rhode-dark selection:text-white">
+    <>
       <Navbar />
-      <Hero />
-      <VideoShowcase />
-      <DesignGallery />
-      <BrandLogoCloud />
-      <SkillsToolkit />
-      <ExperienceSection />
-      <ContactSection />
+      <main id="main" className="flex min-h-[100svh] flex-col">
+        <Hero />
+        <BrandLogoCloud />
+        <VideoShowcase />
+        <DesignGallery />
+        <SkillsToolkit />
+        <ExperienceSection />
+        <ContactSection />
+      </main>
       <Footer />
-    </main>
+    </>
   );
 }
