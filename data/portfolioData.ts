@@ -199,12 +199,44 @@ export const GRAPHICS_DATA: GraphicItem[] = [
     description: "Complex scientific supplement benefits structured into a clean visual sequence designed for fast-scrolling mobile buyers.",
   },
   {
+    id: "amazon-3",
+    title: "Where Nature Meets Science Lifestyle Banner",
+    client: "E-Commerce Storefront",
+    category: "Amazon EBC & Listing",
+    imageSrc: "/portfolio/graphics/amazon-akkermansia-3.png",
+    description: "Underwater product composite for the brand story module, pairing the formula claim with a calm, natural visual world.",
+  },
+  {
     id: "damon-1",
     title: "Foundation Community Awareness Asset",
     client: "Damon Crowdy Foundation (USA)",
     category: "Social Campaign",
     imageSrc: "/portfolio/graphics/damon-crowdy-1.png",
     description: "Minimalist social campaign graphic focused on mission storytelling, unified brand standards, and community interaction.",
+  },
+  {
+    id: "damon-2",
+    title: "Water Is Life Hydration Campaign",
+    client: "Damon Crowdy Foundation (USA)",
+    category: "Social Campaign",
+    imageSrc: "/portfolio/graphics/damon-crowdy-2.png",
+    description: "Bold, poster-style donation call for the summer hydration drive, built to read instantly in a busy feed.",
+  },
+  {
+    id: "damon-3",
+    title: "Leadership Announcement & Social Reach",
+    client: "Damon Crowdy Foundation (USA)",
+    category: "Social Campaign",
+    imageSrc: "/portfolio/graphics/damon-crowdy-3.png",
+    description: "Typography-forward community post crafted for multi-platform distribution and donor engagement.",
+  },
+  {
+    id: "damon-4",
+    title: "Clean Isn't a Luxury Hygiene Drive",
+    client: "Damon Crowdy Foundation (USA)",
+    category: "Social Campaign",
+    imageSrc: "/portfolio/graphics/damon-crowdy-4.png",
+    description: "Editorial flat-lay and serif headline asking supporters to help supply soap, wipes and essentials.",
   },
   {
     id: "rebirth-1",
@@ -215,6 +247,22 @@ export const GRAPHICS_DATA: GraphicItem[] = [
     description: "Balanced aesthetic promotional post created to elevate digital brand presence and drive appointment bookings.",
   },
   {
+    id: "rebirth-2",
+    title: "Today's Reminder Wellness Post",
+    client: "Rebirth Enhancement Services",
+    category: "Brand Promotional",
+    imageSrc: "/portfolio/graphics/rebirth-2.png",
+    description: "Warm, handwritten-note layout for the brand's self-care content pillar, designed for saves and shares.",
+  },
+  {
+    id: "rebirth-3",
+    title: "Weekend Reset Tip Carousel Cover",
+    client: "Rebirth Enhancement Services",
+    category: "Brand Promotional",
+    imageSrc: "/portfolio/graphics/rebirth-3.png",
+    description: "Search-bar visual metaphor turning simple wellness tips into a scannable, on-brand engagement post.",
+  },
+  {
     id: "feature-showcase",
     title: "Multi-Brand Design & Typography System",
     client: "Creative Studio",
@@ -223,12 +271,20 @@ export const GRAPHICS_DATA: GraphicItem[] = [
     description: "Editorial layout showcase highlighting typeface balance, organic whitespace, and high-impact visual communication.",
   },
   {
-    id: "damon-3",
-    title: "Leadership Announcement & Social Reach",
-    client: "Damon Crowdy Foundation (USA)",
-    category: "Social Campaign",
-    imageSrc: "/portfolio/graphics/damon-crowdy-3.png",
-    description: "Typography-forward community post crafted for multi-platform distribution and donor engagement.",
+    id: "social-1",
+    title: "City Day Out Story Collage",
+    client: "Lifestyle Creator, Sydney",
+    category: "Creator Content",
+    imageSrc: "/portfolio/graphics/social-graphic-1.png",
+    description: "Cut-out scrapbook collage for Instagram Stories, layering outfit, food and travel moments into one frame.",
+  },
+  {
+    id: "social-2",
+    title: "Sydney Weekend Story Collage",
+    client: "Lifestyle Creator, Sydney",
+    category: "Creator Content",
+    imageSrc: "/portfolio/graphics/social-graphic-2.png",
+    description: "Hand-drawn accents and layered cut-outs that keep a creator's weekend recap playful but cohesive.",
   },
 ];
 
@@ -443,4 +499,13 @@ export const SKILL_PILLARS = [
       "Community Engagement Management"
     ]
   }
+];
+
+export const TOOLKIT = [
+  "CapCut Pro",
+  "Adobe Premiere Pro",
+  "Adobe After Effects",
+  "Adobe Photoshop",
+  "Figma",
+  "Meta Ads Manager",
 ];

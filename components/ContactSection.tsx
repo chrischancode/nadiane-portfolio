@@ -2,173 +2,206 @@
 
 import React, { useState } from "react";
 import Image from "next/image";
-import { Mail, Phone, Copy, Check, Send, ArrowUpRight } from "lucide-react";
+import { ArrowUpRight, Check, Copy, Mail, MessageCircle, Send } from "lucide-react";
 import { CREATOR_PROFILE } from "@/data/portfolioData";
+import Reveal from "./Reveal";
+
+const SERVICES = ["Video editing", "Graphic design", "Social media management", "Full project"];
 
 export default function ContactSection() {
-  const [copied, setCopied] = useState(false);
-  const [selectedService, setSelectedService] = useState("Video Editing");
+  const [copyState, setCopyState] = useState<"idle" | "copied" | "failed">("idle");
+  const [selectedService, setSelectedService] = useState(SERVICES[0]);
   const [note, setNote] = useState("");
+  const [error, setError] = useState("");
 
-  const copyEmail = () => {
-    navigator.clipboard.writeText(CREATOR_PROFILE.email);
-    setCopied(true);
-    setTimeout(() => setCopied(false), 2500);
+  const copyEmail = async () => {
+    try {
+      await navigator.clipboard.writeText(CREATOR_PROFILE.email);
+      setCopyState("copied");
+    } catch {
+      setCopyState("failed");
+    }
+    setTimeout(() => setCopyState("idle"), 2500);
   };
 
   const handleSend = (e: React.FormEvent) => {
     e.preventDefault();
-    const subject = encodeURIComponent(`Project Inquiry: ${selectedService} with Nadiane`);
+    if (note.trim().length < 10) {
+      setError("Add a sentence or two about the project so I can reply with a plan.");
+      return;
+    }
+    setError("");
+    const subject = encodeURIComponent(`Project inquiry: ${selectedService}`);
     const body = encodeURIComponent(
-      `Hi Nadiane,\n\nI would like to inquire about: ${selectedService}.\n\nProject details:\n${note}\n\nLooking forward to your response!`
+      `Hi Nadiane,\n\nI'd like to talk about: ${selectedService}.\n\nProject details:\n${note}\n\nThanks,`
     );
     window.location.href = `mailto:${CREATOR_PROFILE.email}?subject=${subject}&body=${body}`;
   };
 
+  const channels = [
+    {
+      label: "Email",
+      value: CREATOR_PROFILE.email,
+      href: `mailto:${CREATOR_PROFILE.email}`,
+      icon: Mail,
+      external: false,
+    },
+    {
+      label: "WhatsApp",
+      value: "+63 908 370 7067",
+      href: "https://wa.me/639083707067",
+      icon: MessageCircle,
+      external: true,
+    },
+  ];
+
   return (
-    <section id="contact" className="py-24 sm:py-32 bg-rhode-dark text-white">
-      <div className="max-w-4xl mx-auto px-4 sm:px-8">
-        
-        <div className="text-center mb-16">
-          <span className="text-[11px] font-mono font-bold uppercase tracking-widest text-neutral-400 block mb-2">
-            Get In Touch
-          </span>
-          <h2 className="font-display font-black text-4xl sm:text-5xl text-white tracking-tight">
-            Let&apos;s Work Together.
+    <section id="contact" aria-labelledby="contact-heading" className="on-dark relative overflow-hidden bg-ink-900 py-14 text-ink-100 sm:py-20 lg:py-24">
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute left-1/2 top-0 h-[28rem] w-[56rem] -translate-x-1/2 -translate-y-1/2 rounded-full bg-[radial-gradient(closest-side,rgba(241,237,230,0.08),transparent)]"
+      />
+
+      <div className="relative mx-auto grid max-w-6xl grid-cols-1 gap-10 px-5 sm:px-8 lg:grid-cols-12 lg:gap-14">
+        {/* Pitch + direct channels */}
+        <Reveal className="lg:col-span-5">
+          <h2 id="contact-heading" className="font-display text-[2.75rem] font-semibold leading-[0.95] tracking-display sm:text-7xl">
+            Let&apos;s work
+            <br />
+            together
           </h2>
-          <p className="mt-3 text-sm sm:text-base text-neutral-300 font-normal leading-relaxed max-w-lg mx-auto">
-            Open for short-form video editing commissions, brand visual design, and social media management partnerships.
+          <p className="mt-5 max-w-sm text-base leading-relaxed text-ink-300 sm:text-lg">
+            Open for short-form editing, brand design and social media retainers. Replies within a day.
           </p>
-        </div>
 
-        {/* Big Tap Buttons */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mb-14">
-          
-          {/* Email */}
-          <a
-            href={`mailto:${CREATOR_PROFILE.email}`}
-            className="p-6 rounded-2xl bg-neutral-900 border border-neutral-800 hover:border-white transition-all flex flex-col justify-between group"
-          >
-            <div className="flex items-center justify-between mb-4">
-              <Mail className="w-5 h-5 text-white" />
-              <ArrowUpRight className="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" />
-            </div>
-            <div>
-              <span className="text-[10px] font-mono uppercase text-neutral-400 block">Email</span>
-              <p className="font-display font-bold text-sm text-white truncate mt-0.5">
-                {CREATOR_PROFILE.email}
-              </p>
-            </div>
-          </a>
+          <ul className="mt-8 divide-y divide-ink-800 border-y border-ink-800">
+            {channels.map(({ label, value, href, icon: Icon, external }) => (
+              <li key={label}>
+                <a
+                  href={href}
+                  {...(external ? { target: "_blank", rel: "noopener noreferrer" } : {})}
+                  className="press group flex items-center gap-4 py-4 active:opacity-70"
+                >
+                  <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink-850 text-ink-100 transition-colors group-hover:bg-ink-100 group-hover:text-ink-950">
+                    <Icon className="h-[18px] w-[18px]" strokeWidth={1.75} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-xs text-ink-500">{label}</span>
+                    <span className="block truncate text-[15px] font-medium">{value}</span>
+                  </span>
+                  <ArrowUpRight className="h-4 w-4 shrink-0 text-ink-500 transition-transform duration-300 group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-ink-100" />
+                </a>
+              </li>
+            ))}
+            <li>
+              <button type="button" onClick={copyEmail} className="press group flex w-full items-center gap-4 py-4 text-left active:opacity-70">
+                <span className="flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-ink-850 text-ink-100 transition-colors group-hover:bg-ink-100 group-hover:text-ink-950">
+                  {copyState === "copied" ? (
+                    <Check className="h-[18px] w-[18px]" strokeWidth={2} />
+                  ) : (
+                    <Copy className="h-[18px] w-[18px]" strokeWidth={1.75} />
+                  )}
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block text-xs text-ink-500">Quick copy</span>
+                  <span className="block text-[15px] font-medium" aria-live="polite">
+                    {copyState === "copied"
+                      ? "Email copied to clipboard"
+                      : copyState === "failed"
+                        ? "Couldn't copy. Long-press the email above."
+                        : "Copy email address"}
+                  </span>
+                </span>
+              </button>
+            </li>
+          </ul>
+        </Reveal>
 
-          {/* WhatsApp / Phone */}
-          <a
-            href="https://wa.me/639083707067"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="p-6 rounded-2xl bg-neutral-900 border border-neutral-800 hover:border-white transition-all flex flex-col justify-between group"
+        {/* Inquiry form */}
+        <Reveal delay={100} className="lg:col-span-7">
+          <form
+            onSubmit={handleSend}
+            noValidate
+            className="rounded-[1.75rem] border border-ink-800 bg-ink-850/70 p-5 shadow-[inset_0_1px_0_rgba(255,255,255,0.04)] sm:p-8"
           >
-            <div className="flex items-center justify-between mb-4">
-              <Phone className="w-5 h-5 text-white" />
-              <ArrowUpRight className="w-4 h-4 text-neutral-500 group-hover:text-white transition-colors" />
-            </div>
-            <div>
-              <span className="text-[10px] font-mono uppercase text-neutral-400 block">WhatsApp / Call</span>
-              <p className="font-display font-bold text-sm text-white mt-0.5">
-                {CREATOR_PROFILE.phone}
-              </p>
-            </div>
-          </a>
-
-          {/* Copy Email */}
-          <div
-            onClick={copyEmail}
-            className="p-6 rounded-2xl bg-neutral-900 border border-neutral-800 hover:border-white transition-all flex flex-col justify-between cursor-pointer group"
-          >
-            <div className="flex items-center justify-between mb-4">
-              {copied ? <Check className="w-5 h-5 text-emerald-400" /> : <Copy className="w-5 h-5 text-white" />}
-              <span className="text-[10px] font-mono uppercase text-neutral-400">
-                {copied ? "Copied" : "Click to Copy"}
+            <div className="flex items-center gap-3 border-b border-ink-800 pb-5 sm:pb-6">
+              <span className="relative h-11 w-11 shrink-0 overflow-hidden rounded-full ring-1 ring-ink-700">
+                <Image src={CREATOR_PROFILE.heroImage} alt="" fill sizes="44px" className="object-cover" />
               </span>
-            </div>
-            <div>
-              <span className="text-[10px] font-mono uppercase text-neutral-400 block">Quick Copy</span>
-              <p className="font-display font-bold text-sm text-white mt-0.5">
-                {copied ? "Copied to Clipboard!" : "Copy Email Address"}
-              </p>
-            </div>
-          </div>
-
-        </div>
-
-        {/* Minimal Inquiry Box */}
-        <form onSubmit={handleSend} className="p-8 rounded-3xl bg-neutral-900/90 border border-neutral-800">
-          <div className="flex items-center gap-3 mb-6 pb-6 border-b border-neutral-800">
-            <div className="w-10 h-10 rounded-full overflow-hidden border border-neutral-700">
-              <Image
-                src={CREATOR_PROFILE.heroImage}
-                alt="Nadiane"
-                width={40}
-                height={40}
-                className="object-cover"
-              />
-            </div>
-            <div>
-              <p className="font-display font-bold text-sm text-white">
-                Message Nadiane
-              </p>
-              <p className="text-xs text-neutral-400 font-mono">
-                Kabankalan, Philippines &bull; 24-48h Project Turnaround
-              </p>
-            </div>
-          </div>
-
-          <div className="space-y-5">
-            <div>
-              <label className="block text-xs font-mono uppercase text-neutral-400 mb-2">
-                Select Service:
-              </label>
-              <div className="flex flex-wrap gap-2">
-                {["Video Editing", "Graphic Design", "Social Media Management", "Full Project"].map((s) => (
-                  <button
-                    type="button"
-                    key={s}
-                    onClick={() => setSelectedService(s)}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-mono uppercase tracking-wider transition-all ${
-                      selectedService === s
-                        ? "bg-white text-black font-bold"
-                        : "bg-neutral-800 text-neutral-300 hover:bg-neutral-700"
-                    }`}
-                  >
-                    {s}
-                  </button>
-                ))}
+              <div className="min-w-0">
+                <p className="font-display text-[15px] font-semibold">Message Nadiane</p>
+                <p className="text-[13px] text-ink-500">Typical turnaround 24 to 48 hours</p>
               </div>
             </div>
 
-            <div>
-              <label className="block text-xs font-mono uppercase text-neutral-400 mb-2">
-                Project Summary:
+            <fieldset className="mt-6">
+              <legend className="mb-3 text-sm font-medium text-ink-300">What do you need?</legend>
+              <div className="flex flex-wrap gap-2">
+                {SERVICES.map((s) => {
+                  const isActive = selectedService === s;
+                  return (
+                    <label
+                      key={s}
+                      className={`press relative inline-flex h-10 cursor-pointer items-center rounded-full px-4 text-sm has-[:focus-visible]:outline has-[:focus-visible]:outline-2 has-[:focus-visible]:outline-offset-2 has-[:focus-visible]:outline-ink-100 ${
+                        isActive ? "bg-ink-100 font-medium text-ink-950" : "bg-ink-800 text-ink-300 hover:bg-ink-700 hover:text-ink-100"
+                      }`}
+                    >
+                      <input
+                        type="radio"
+                        name="service"
+                        value={s}
+                        checked={isActive}
+                        onChange={() => setSelectedService(s)}
+                        className="sr-only"
+                      />
+                      {s}
+                    </label>
+                  );
+                })}
+              </div>
+            </fieldset>
+
+            <div className="mt-6">
+              <label htmlFor="project-summary" className="mb-2 block text-sm font-medium text-ink-300">
+                Project summary
               </label>
               <textarea
+                id="project-summary"
+                name="summary"
                 value={note}
-                onChange={(e) => setNote(e.target.value)}
-                placeholder="Describe your video editing or design project requirements..."
-                rows={3}
-                className="w-full p-4 rounded-xl bg-black border border-neutral-800 text-white placeholder-neutral-500 text-sm focus:outline-none focus:border-white transition-all resize-none"
+                onChange={(e) => {
+                  setNote(e.target.value);
+                  if (error) setError("");
+                }}
+                placeholder="Brand, platform, number of videos or assets, and your deadline."
+                rows={4}
+                enterKeyHint="send"
+                aria-invalid={!!error}
+                aria-describedby={error ? "summary-error" : "summary-help"}
+                className={`w-full resize-none rounded-2xl border bg-ink-950/60 p-4 text-base leading-relaxed text-ink-100 placeholder:text-ink-500 transition-colors focus:outline-none sm:text-[15px] ${
+                  error ? "border-[#E39A8C]" : "border-ink-800 focus:border-ink-300"
+                }`}
               />
+              {error ? (
+                <p id="summary-error" role="alert" className="mt-2 text-sm text-[#E39A8C]">
+                  {error}
+                </p>
+              ) : (
+                <p id="summary-help" className="mt-2 text-[13px] text-ink-500">
+                  Opens your email app with everything filled in.
+                </p>
+              )}
             </div>
 
             <button
               type="submit"
-              className="w-full py-3.5 rounded-full bg-white hover:bg-neutral-200 text-black font-display font-bold text-xs uppercase tracking-wider transition-all flex items-center justify-center gap-2"
+              className="press mt-6 inline-flex h-12 w-full items-center justify-center gap-2 rounded-full bg-ink-100 text-[15px] font-medium text-ink-950 hover:bg-white"
             >
-              <span>Send Message</span>
-              <Send className="w-3.5 h-3.5" />
+              Send message
+              <Send className="h-4 w-4" strokeWidth={1.75} />
             </button>
-          </div>
-        </form>
-
+          </form>
+        </Reveal>
       </div>
     </section>
   );

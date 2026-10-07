@@ -1,76 +1,55 @@
-"use client";
-
 import React from "react";
-import Image from "next/image";
-import { ArrowUp, FolderDown } from "lucide-react";
+import { ArrowUp, ArrowUpRight } from "lucide-react";
 import { CREATOR_PROFILE } from "@/data/portfolioData";
 
+const LINKS = [
+  { name: "Videos", href: "#videos" },
+  { name: "Designs", href: "#designs" },
+  { name: "Expertise", href: "#expertise" },
+  { name: "Experience", href: "#experience" },
+  { name: "Contact", href: "#contact" },
+];
+
 export default function Footer() {
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-
   return (
-    <footer className="bg-rhode-dark text-white border-t border-neutral-900 pt-16 pb-12">
-      <div className="max-w-6xl mx-auto px-4 sm:px-8">
-        
-        <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-8 pb-12 border-b border-neutral-900">
-          
-          <div className="flex items-center gap-3">
-            <div className="relative w-10 h-10 rounded-full overflow-hidden border border-neutral-800">
-              <Image
-                src={CREATOR_PROFILE.heroImage}
-                alt={CREATOR_PROFILE.name}
-                fill
-                className="object-cover"
-              />
-            </div>
-            <div>
-              <span className="font-display font-bold text-base text-white tracking-tight uppercase">
-                {CREATOR_PROFILE.name}
-              </span>
-              <p className="text-xs text-neutral-400 font-mono">
-                {CREATOR_PROFILE.role}
-              </p>
-            </div>
+    <footer className="on-dark border-t border-ink-800 bg-ink-900 pb-[max(2rem,env(safe-area-inset-bottom))] pt-12 text-ink-100">
+      <div className="mx-auto max-w-6xl px-5 sm:px-8">
+        <div className="flex flex-col gap-8 md:flex-row md:items-end md:justify-between">
+          <div>
+            <p className="font-display text-2xl font-semibold tracking-tight">{CREATOR_PROFILE.name}</p>
+            <p className="mt-1 max-w-xs text-sm text-ink-500">{CREATOR_PROFILE.role}</p>
           </div>
 
-          <div className="flex flex-wrap items-center gap-6 text-xs font-mono uppercase tracking-wider text-neutral-400">
-            <a href="#videos" className="hover:text-white transition-colors">Videos</a>
-            <a href="#designs" className="hover:text-white transition-colors">Designs</a>
-            <a href="#experience" className="hover:text-white transition-colors">Experience</a>
-            <a href="#contact" className="hover:text-white transition-colors">Contact</a>
-            <a 
-              href={CREATOR_PROFILE.portfolioDriveVideos} 
-              target="_blank" 
-              rel="noopener noreferrer" 
-              className="text-white hover:text-neutral-300 transition-colors flex items-center gap-1"
+          <nav aria-label="Footer" className="grid grid-cols-2 gap-x-10 gap-y-3 text-[15px] sm:flex sm:flex-wrap sm:gap-x-7">
+            {LINKS.map((l) => (
+              <a key={l.name} href={l.href} className="text-ink-300 transition-colors hover:text-ink-100">
+                {l.name}
+              </a>
+            ))}
+            <a
+              href={CREATOR_PROFILE.portfolioDriveVideos}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="inline-flex items-center gap-1 text-ink-300 transition-colors hover:text-ink-100"
             >
-              <span>Drive</span>
-              <FolderDown className="w-3.5 h-3.5" />
+              Drive archive
+              <ArrowUpRight className="h-3.5 w-3.5" strokeWidth={2} />
             </a>
-          </div>
+          </nav>
+        </div>
 
-          <button
-            onClick={scrollToTop}
-            className="w-9 h-9 rounded-full bg-neutral-900 hover:bg-neutral-800 text-white flex items-center justify-center transition-colors border border-neutral-800"
-            aria-label="Scroll to top"
+        <div className="mt-10 flex items-center justify-between gap-6 border-t border-ink-800 pt-6 text-[13px] text-ink-500">
+          <p>
+            &copy; {new Date().getFullYear()} {CREATOR_PROFILE.name}. Based in {CREATOR_PROFILE.location}.
+          </p>
+          <a
+            href="#main"
+            className="press flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-ink-800 text-ink-100 hover:bg-ink-850"
+            aria-label="Back to top"
           >
-            <ArrowUp className="w-4 h-4" />
-          </button>
-
+            <ArrowUp className="h-4 w-4" strokeWidth={1.75} />
+          </a>
         </div>
-
-        <div className="pt-8 flex flex-col sm:flex-row items-center justify-between text-xs font-mono text-neutral-400 gap-4">
-          <p>
-            &copy; {new Date().getFullYear()} {CREATOR_PROFILE.name}. All rights reserved.
-          </p>
-
-          <p>
-            Based in {CREATOR_PROFILE.location}
-          </p>
-        </div>
-
       </div>
     </footer>
   );

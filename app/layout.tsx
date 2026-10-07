@@ -1,19 +1,17 @@
-import type { Metadata } from "next";
-import { Plus_Jakarta_Sans, Outfit } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { GeistSans } from "geist/font/sans";
+import { GeistMono } from "geist/font/mono";
 import Script from "next/script";
 import "./globals.css";
 
-const jakarta = Plus_Jakarta_Sans({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const outfit = Outfit({
-  subsets: ["latin"],
-  variable: "--font-outfit",
-  display: "swap",
-});
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  // Paint under the notch; fixed UI pads itself back with env(safe-area-inset-*).
+  viewportFit: "cover",
+  themeColor: "#EDE8E1",
+  colorScheme: "light",
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://nadianebandola.site"),
@@ -146,9 +144,10 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${jakarta.variable} ${outfit.variable} scroll-smooth`}>
+    <html lang="en" className={`${GeistSans.variable} ${GeistMono.variable}`} suppressHydrationWarning>
       <head>
-        <meta name="theme-color" content="#EDE8E1" />
+        {/* Marks the document as scripted before paint so scroll reveals never hide content without JS. */}
+        <script dangerouslySetInnerHTML={{ __html: "document.documentElement.classList.add('js')" }} />
         <meta name="google-site-verification" content="qsRKuFesfi_pW6TQVGslQFBTtlWfhY73xe92kuW-LbY" />
         <link rel="author" href="https://nadianebandola.site/llms.txt" />
         <script
@@ -173,8 +172,15 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="bg-rhode-bg text-rhode-dark antialiased selection:bg-rhode-dark selection:text-white">
+      <body className="bg-rhode-bg text-rhode-dark antialiased selection:bg-rhode-dark selection:text-rhode-light">
+        <a
+          href="#main"
+          className="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-overlay focus:rounded-full focus:bg-rhode-dark focus:px-5 focus:py-3 focus:text-sm focus:font-medium focus:text-rhode-light"
+        >
+          Skip to content
+        </a>
         {children}
+        <div className="grain" aria-hidden="true" />
       </body>
     </html>
   );
